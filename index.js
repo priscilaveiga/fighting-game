@@ -12,7 +12,7 @@ context.fillRect(0, 0, canvas.width, canvas.height)
 const gravity = 0.7
 
 /*Creating an object player
-The class receive the name Sprite because it's common in gaming development: it has images, moviments, for e.g.
+The class receive the name Sprite because it's common in gaming development: it has images, movements, for e.g.
 */
 class Sprite {
     constructor({ position, velocity, color = 'purple', offset }) {
@@ -50,7 +50,7 @@ class Sprite {
     update() {
         this.draw()
 
-        //updating the attack box acording to thw position of the player dinamically
+        //updating the attack box according to thw position of the player dynamically
         this.attackBox.position.x = this.position.x + this.attackBox.offset.x
         this.attackBox.position.y = this.position.y
 
@@ -134,7 +134,38 @@ function rectangleCollision({ rectangle1, rectangle2 }) {
     )
 }
 
-//Creating an animation for players -> this is a loop to repeat the sequence of moviments
+function determineWinners({ player, enemy, timerId}) {
+    //to stop the timer when the health bar is over
+    clearTimeout(timerId)
+    //property repeated for all the if's
+    document.querySelector('#gameResult').style.display = 'flex'
+    if (player.health === enemy.health) {
+        document.querySelector('#gameResult').innerHTML = 'Tie'
+    }
+    else if (player.health > enemy.health) {
+        document.querySelector('#gameResult').innerHTML = 'Player 1 Wins'
+    }
+    else if (player.health < enemy.health) {
+        document.querySelector('#gameResult').innerHTML = 'Player 2 Wins'
+    }
+}
+
+let timer = 50
+function decreaseTimer() {
+    if (timer > 0) {
+        timerId = setTimeout(decreaseTimer, 1000)
+        timer--
+        document.querySelector('#timer').innerHTML = timer
+    }
+
+    if (timer === 0) {
+        determineWinners({player, enemy, timerId})
+    }
+}
+
+decreaseTimer()
+
+//Creating an animation for players -> this is a loop to repeat the sequence of movements
 function animate() {
     window.requestAnimationFrame(animate)
     context.fillStyle = 'black'
@@ -142,16 +173,16 @@ function animate() {
     player.update()
     enemy.update()
 
-    //player moviment
+    //player movement
     player.velocity.x = 0
-    //to accurate our moviment x
+    //to accurate our movement x
     if (keys.d.pressed && player.lastKey === 'd') {
         player.velocity.x = 5
     } else if (keys.a.pressed && player.lastKey === 'a') {
         player.velocity.x = -5
     }
 
-    //enemy moviment
+    //enemy movement
     enemy.velocity.x = 0
     if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
         enemy.velocity.x = 5
@@ -172,7 +203,6 @@ function animate() {
         player.isAttacking = false
         enemy.health -= 20
         document.querySelector('#enemyHealth').style.width = enemy.health + '%'
-        //console.log('Vou da porradah')
     }
 
     if (
@@ -185,7 +215,11 @@ function animate() {
         enemy.isAttacking = false
         player.health -= 20
         document.querySelector('#playerHealth').style.width = player.health + '%'
-        //console.log('Nao vai naaaum!')
+    }
+
+    if (player.health <=0 || enemy.health<=0) {
+        determineWinners({player, enemy, timerId})
+
     }
 
 
