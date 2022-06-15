@@ -2,7 +2,7 @@
 The class receive the name Sprite because it's common in gaming development: it has images, movements, for e.g.
 */
 class Sprite {
-    constructor({ position, imageSrc, scale = 1, framesMax = 1}) {
+    constructor({ position, imageSrc, scale = 1, framesMax = 1, offset = {x:0, y:0}}) {
         this.position = position
         this.width = 50
         this.height = 150
@@ -13,6 +13,7 @@ class Sprite {
         this.framesCurrent = 0
         this.framesElapsed = 0
         this.framesHold = 5
+        this.offset = offset
     }
 
     draw() {
@@ -20,12 +21,16 @@ class Sprite {
         context.drawImage(this.image, this.position.x, this.position.y, this.image.width * this.scale, this.image.height * this.scale)
         The new method draw will include a crop feature for the shop animation
         */
-        context.drawImage(this.image, this.framesCurrent * (this.image.width/ this.framesMax), 0, this.image.width/ this.framesMax, this.image.height, this.position.x, this.position.y, 
+        context.drawImage(this.image, this.framesCurrent * (this.image.width/ this.framesMax), 0, this.image.width/ this.framesMax, this.image.height, this.position.x - this.offset.x, this.position.y - this.offset.y, 
         (this.image.width/ this.framesMax) * this.scale, this.image.height * this.scale)
     }
 
     update() {
         this.draw()
+        this.animateFrames()
+    }
+
+    animateFrames(){
         this.framesElapsed++
         if( this.framesElapsed % this.framesHold === 0){
             if (this.framesCurrent < this.framesMax -1){
@@ -39,11 +44,18 @@ class Sprite {
 
 }
 
-//Creating an object player
-class Fighter {
-    constructor({ position, velocity, color = 'purple', offset }) {
-        this.position = position
-        this.velocity = velocity
+//Creating an class player which has images properties (that's why its extends the Sprite class)
+class Fighter extends Sprite{
+    constructor({ position, velocity, color = 'purple', imageSrc, scale = 1, framesMax = 1, offset = {x:0, y:0}, sprites }) {
+        super({
+            position,
+            imageSrc,
+            scale,
+            framesMax,
+            offset
+        })
+        
+    this.velocity = velocity
         this.width = 50
         this.height = 150
         this.lastKey
@@ -60,21 +72,25 @@ class Fighter {
         this.color = color
         this.isAttacking
         this.health = 100
-    }
+        //extended from Sprite with values
+        this.framesCurrent = 0
+        this.framesElapsed = 0
+        this.framesHold = 5
+        this.sprites = sprites
 
-    draw() {
-        context.fillStyle = this.color
-        context.fillRect(this.position.x, this.position.y, this.width, this.height)
-
-        //attack box
-        if (this.isAttacking) {
-            context.fillStyle = 'green'
-            context.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
+        let sprite
+        for (sprite in this.sprites){
+            sprites[sprite].image = new Image()
+            sprites[sprite].image.src = sprites[sprite].imageSrc
         }
+
+        console.log(this.sprites)
+
     }
 
     update() {
         this.draw()
+        this.animateFrames()
 
         //updating the attack box according to thw position of the player dynamically
         this.attackBox.position.x = this.position.x + this.attackBox.offset.x
