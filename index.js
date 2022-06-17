@@ -57,17 +57,18 @@ const player = new Fighter({
         run: {
             imageSrc: './img/samuraiMack/Run.png',
             framesMax: 8,
-            image: new Image()
         },
         jump: {
             imageSrc: './img/samuraiMack/Jump.png',
             framesMax: 2,
-            image: new Image()
         },
         fall: {
             imageSrc: './img/samuraiMack/Fall.png',
             framesMax: 2,
-            image: new Image()
+        },
+        attack1: {
+            imageSrc: './img/samuraiMack/Attack1.png',
+            framesMax: 6,
         }
     }
 })
@@ -139,7 +140,7 @@ function animate() {
     } else if (player.velocity.y > 0){
         player.switchSprite('fall')
     }
-
+    
     //enemy movement
     enemy.velocity.x = 0
     if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
@@ -219,8 +220,6 @@ window.addEventListener('keydown', (event) => {
             enemy.attack()
             break
     }
-    //console.log(event.key)
-
 })
 
 window.addEventListener('keyup', (event) => {
@@ -242,7 +241,5 @@ window.addEventListener('keyup', (event) => {
             keys.ArrowLeft.pressed = false
             break
     }
-    //console.log(event.key)
-
 })
 
