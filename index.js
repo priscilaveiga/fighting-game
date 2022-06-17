@@ -107,7 +107,6 @@ const keys = {
     ArrowRight: {
         pressed: false
     }
-
 }
 
 decreaseTimer()
@@ -180,8 +179,6 @@ function animate() {
         determineWinners({ player, enemy, timerId })
 
     }
-
-
 }
 
 animate()
