@@ -76,8 +76,8 @@ const player = new Fighter({
 
 const enemy = new Fighter({
     position: {
-        x: 900,
-        y: 0
+        x: 400,
+        y: 100
     },
     velocity: {
         x: 0,
@@ -87,6 +87,35 @@ const enemy = new Fighter({
     offset: {
         x: -50,
         y: 0
+    },
+    imageSrc: './img/kenji/Idle.png',
+    scale: 2.5,
+    framesMax: 4,
+    offset: {
+        x:215,
+        y:167
+    },
+    sprites: {
+        idle:{
+            imageSrc: './img/kenji/Idle.png',
+            framesMax: 4
+        },
+        run: {
+            imageSrc: './img/kenji/Run.png',
+            framesMax: 8,
+        },
+        jump: {
+            imageSrc: './img/kenji/Jump.png',
+            framesMax: 2,
+        },
+        fall: {
+            imageSrc: './img/kenji/Fall.png',
+            framesMax: 2,
+        },
+        attack1: {
+            imageSrc: './img/kenji/Attack1.png',
+            framesMax: 4,
+        }
     }
 })
 
@@ -120,12 +149,12 @@ function animate() {
     background.update()
     shop.update()
     player.update()
-    //enemy.update()
+    enemy.update()
 
-    //player movement
+    // player movement
     player.velocity.x = 0
    
-    //to accurate our movement x
+    // to accurate our movement x
     if (keys.d.pressed && player.lastKey === 'd') {
         player.velocity.x = 5
         player.switchSprite('run')
@@ -135,21 +164,32 @@ function animate() {
     } else { player.switchSprite('idle')
     }
 
+    // jumping
     if (player.velocity.y < 0){
         player.switchSprite('jump')
     } else if (player.velocity.y > 0){
         player.switchSprite('fall')
     }
     
-    //enemy movement
+    // enemy movement
     enemy.velocity.x = 0
     if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
         enemy.velocity.x = 5
+        enemy.switchSprite('run')
     } else if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
         enemy.velocity.x = -5
+        enemy.switchSprite('run')
+    } else { enemy.switchSprite('idle')
     }
 
-    //detect for collision
+    // jumping
+    if (enemy.velocity.y < 0){
+        enemy.switchSprite('jump')
+    } else if (enemy.velocity.y > 0){
+        enemy.switchSprite('fall')
+    }
+
+    // detect for collision
     /* 1st case: the player is touching the enemy, 2nd case: limiting when the player is touching the enemy and passed their, 3rd case: the player is jumping and touching the enemy or vice verse
     */
     if (
