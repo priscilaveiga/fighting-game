@@ -25,11 +25,6 @@ class Sprite {
         (this.image.width/ this.framesMax) * this.scale, this.image.height * this.scale)
     }
 
-    update() {
-        this.draw()
-        this.animateFrames()
-    }
-
     animateFrames(){
         this.framesElapsed++
         if( this.framesElapsed % this.framesHold === 0){
@@ -41,12 +36,15 @@ class Sprite {
         }
     }
 
-
+    update() {
+        this.draw()
+        this.animateFrames()
+    }
 }
 
 //Creating an class player which has images properties (that's why its extends the Sprite class)
 class Fighter extends Sprite{
-    constructor({ position, velocity, color = 'purple', imageSrc, scale = 1, framesMax = 1, offset = {x:0, y:0}, sprites }) {
+    constructor({ position, velocity, color = 'purple', imageSrc, scale = 1, framesMax = 1, offset = {x:0, y:0}, sprites, attackBox = { offset:{}, width: undefined, height: undefined} }) {
         super({
             position,
             imageSrc,
@@ -65,9 +63,9 @@ class Fighter extends Sprite{
                 x: this.position.x,
                 y: this.position.y
             },
-            offset: offset,
-            width: 100,
-            height: 50
+            offset: attackBox.offset,
+            width: attackBox.width,
+            height: attackBox.height
         }
         this.color = color
         this.isAttacking
@@ -75,11 +73,11 @@ class Fighter extends Sprite{
         //extended from Sprite with values
         this.framesCurrent = 0
         this.framesElapsed = 0
-        this.framesHold = 3
+        this.framesHold = 5
         this.sprites = sprites
 
-        let sprite
-        for (sprite in this.sprites){
+        
+        for ( const sprite in this.sprites){
             sprites[sprite].image = new Image()
             sprites[sprite].image.src = sprites[sprite].imageSrc
         }
@@ -90,28 +88,29 @@ class Fighter extends Sprite{
         this.draw()
         this.animateFrames()
 
-        //updating the attack box according to thw position of the player dynamically
+        // updating the attack box according to the position of the player dynamically
         this.attackBox.position.x = this.position.x + this.attackBox.offset.x
-        this.attackBox.position.y = this.position.y
+        this.attackBox.position.y = this.position.y + this.attackBox.offset.y
+
+        // draw the attack box
+        //context.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
 
         //This is a short version of this.position.y = this.position.y + this.velocity.y
         this.position.y += this.velocity.y
+        this.position.x += this.velocity.x
+
         //gravity function
         if (this.position.y + this.height + this.velocity.y >= canvas.height - 96) {
             this.velocity.y = 0
             this.position.y = 330 //to correct the gravity and velocity sprites and prevent weird flashes during the image transition
         } else this.velocity.y += gravity //adding gravity to a player when it's above the canvas.height
-        this.position.x += this.velocity.x
+        
 
     }
 
     attack() {
         this.switchSprite('attack1')
         this.isAttacking = true
-        //We would like to attack just for a certain amount of time
-        setTimeout(() => {
-            this.isAttacking = false
-        }, 100)
     }
 
     switchSprite (sprite) {
