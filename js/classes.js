@@ -75,6 +75,7 @@ class Fighter extends Sprite{
         this.framesElapsed = 0
         this.framesHold = 5
         this.sprites = sprites
+        this.dead = false
 
         
         for ( const sprite in this.sprites){
@@ -86,7 +87,7 @@ class Fighter extends Sprite{
 
     update() {
         this.draw()
-        this.animateFrames()
+        if (!this.dead) this.animateFrames()
 
         // updating the attack box according to the position of the player dynamically
         this.attackBox.position.x = this.position.x + this.attackBox.offset.x
@@ -115,10 +116,19 @@ class Fighter extends Sprite{
 
     takeHit(){
         this.health -= 20
-        this.switchSprite('takeHit')
+        if (this.health <=0){
+            this.switchSprite('death')
+        } else this.switchSprite('takeHit')
     }
 
     switchSprite (sprite) {
+        // overriding death animation - not allowing any other animation after death
+        if (this.image === this.sprites.death.image) {
+            if (this.framesCurrent === this.sprites.death.framesMax - 1)
+                this.dead = true
+            return
+        }
+
         // overriding all the other animations with the attack animation
         if(
             this.image === this.sprites.attack1.image &&
@@ -172,6 +182,13 @@ class Fighter extends Sprite{
                     this.framesCurrent = 0
                 }
                 break;
+            case 'death':
+            if(this.image !== this.sprites.death.image){
+                this.image = this.sprites.death.image
+                this.framesMax = this.sprites.death.framesMax
+                this.framesCurrent = 0
+            }
+            break;
         }
     }
 
