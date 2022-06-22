@@ -69,6 +69,10 @@ const player = new Fighter({
         attack1: {
             imageSrc: './img/samuraiMack/Attack1.png',
             framesMax: 6,
+        },
+        takeHit: {
+            imageSrc : './img/samuraiMack/TakeHitWhite.png',
+            framesMax: 4,
         }
     },
     attackBox: {
@@ -80,7 +84,6 @@ const player = new Fighter({
         height: 50
     }
 })
-
 
 const enemy = new Fighter({
     position: {
@@ -123,6 +126,10 @@ const enemy = new Fighter({
         attack1: {
             imageSrc: './img/kenji/Attack1.png',
             framesMax: 4,
+        },
+        takeHit: {
+            imageSrc : './img/kenji/Takehit.png',
+            framesMax: 3,
         }
     },
     attackBox: {
@@ -133,10 +140,7 @@ const enemy = new Fighter({
         width: 170,
         height: 50
     }
-
 })
-
-
 
 console.log(player)
 
@@ -206,7 +210,7 @@ function animate() {
         enemy.switchSprite('fall')
     }
 
-    // detect for collision
+    // detect for collision & enemy gets hit
     /* 1st case: the player is touching the enemy, 2nd case: limiting when the player is touching the enemy and passed their, 3rd case: the player is jumping and touching the enemy or vice verse
     */
     if (
@@ -216,9 +220,9 @@ function animate() {
         }) &&
         player.isAttacking && player.framesCurrent === 4
     ) {
+        enemy.takeHit()
         player.isAttacking = false
-        enemy.health -= 20
-        document.querySelector('#enemyHealth').style.width = enemy.health + '%'
+        document.querySelector('#enemyHealth').style.width = enemy.health + '%'   
     }
 
     // if player misses
@@ -233,8 +237,8 @@ function animate() {
         }) &&
         enemy.isAttacking && enemy.framesCurrent === 2
     ) {
+        player.takeHit()
         enemy.isAttacking = false
-        player.health -= 20
         document.querySelector('#playerHealth').style.width = player.health + '%'
     }
 
@@ -246,7 +250,6 @@ function animate() {
     // end game based on health
     if (player.health <= 0 || enemy.health <= 0) {
         determineWinners({ player, enemy, timerId })
-
     }
 }
 
@@ -270,7 +273,7 @@ window.addEventListener('keydown', (event) => {
         case ' ':
             player.attack()
             break
-
+            
         case 'ArrowRight':
             keys.ArrowRight.pressed = true
             enemy.lastKey = 'ArrowRight'
