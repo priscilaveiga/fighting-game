@@ -177,6 +177,8 @@ function animate() {
     context.fillRect(0, 0, canvas.width, canvas.height) 
     background.update()
     shop.update()
+    context.fillStyle = 'rgba(255, 2555, 255, 0.15)'
+    context.fillRect(0, 0, canvas.width, canvas.height)
     player.update()
     enemy.update()
 
@@ -230,7 +232,10 @@ function animate() {
     ) {
         enemy.takeHit()
         player.isAttacking = false
-        document.querySelector('#enemyHealth').style.width = enemy.health + '%'   
+        // Health bar animation   previous: document.querySelector('#enemyHealth').style.width = enemy.health + '%' 
+        gsap.to('#enemyHealth', {
+            width:enemy.health + '%'
+        })  
     }
 
     // if player misses
@@ -247,7 +252,9 @@ function animate() {
     ) {
         player.takeHit()
         enemy.isAttacking = false
-        document.querySelector('#playerHealth').style.width = player.health + '%'
+        gsap.to('#playerHealth', {
+            width:player.health + '%'
+        })
     }
 
     // if enemy misses
