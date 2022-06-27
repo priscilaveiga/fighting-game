@@ -2,7 +2,7 @@
 The class receive the name Sprite because it's common in gaming development: it has images, movements, for e.g.
 */
 class Sprite {
-    constructor({ position, imageSrc, scale = 1, framesMax = 1, offset = {x:0, y:0}}) {
+    constructor({ position, imageSrc, scale = 1, framesMax = 1, offset = {x:0, y:0}, audios}) {
         this.position = position
         this.width = 50
         this.height = 150
@@ -14,6 +14,7 @@ class Sprite {
         this.framesElapsed = 0
         this.framesHold = 5
         this.offset = offset
+        this.audios = audios
     }
 
     draw() {
@@ -44,13 +45,14 @@ class Sprite {
 
 //Creating an class player which has images properties (that's why its extends the Sprite class)
 class Fighter extends Sprite{
-    constructor({ position, velocity, color = 'purple', imageSrc, scale = 1, framesMax = 1, offset = {x:0, y:0}, sprites, attackBox = { offset:{}, width: undefined, height: undefined} }) {
+    constructor({ position, velocity, color = 'purple', imageSrc, scale = 1, framesMax = 1, offset = {x:0, y:0}, sprites, attackBox = { offset:{}, width: undefined, height: undefined}, audios}) {
         super({
             position,
             imageSrc,
             scale,
             framesMax,
-            offset
+            offset,
+            audios
         })
         
         this.velocity = velocity
@@ -76,13 +78,18 @@ class Fighter extends Sprite{
         this.framesHold = 5
         this.sprites = sprites
         this.dead = false
-
         
         for ( const sprite in this.sprites){
             sprites[sprite].image = new Image()
             sprites[sprite].image.src = sprites[sprite].imageSrc
         }
 
+        for ( const audio in this.audios){
+            audios[audio] = new Howl({
+                src: audios[audio].audioSrc, 
+                html5: audios[audio].html5
+            })
+        }
     }
 
     update() {
@@ -112,13 +119,17 @@ class Fighter extends Sprite{
     attack() {
         this.switchSprite('attack1')
         this.isAttacking = true
+        this.audios.attack.play()
     }
 
     takeHit(){
         this.health -= 20
         if (this.health <=0){
             this.switchSprite('death')
-        } else this.switchSprite('takeHit')
+        } else {
+            this.switchSprite('takeHit')
+            this.audios.takeHit?.play()
+        }
     }
 
     switchSprite (sprite) {

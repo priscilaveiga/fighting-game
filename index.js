@@ -86,6 +86,12 @@ const player = new Fighter({
         },
         width: 160,
         height: 50
+    },
+    audios:{
+        attack:{
+            audioSrc: 'audio/Battle_Attack_7.mp3',
+            html5: true
+        }
     }
 })
 
@@ -147,6 +153,12 @@ const enemy = new Fighter({
         },
         width: 170,
         height: 50
+    },
+    audios:{
+        attack:{
+            audioSrc: 'audio/Battle_Attack_12.mp3',
+            html5: true
+        }
     }
 })
 
