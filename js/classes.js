@@ -128,7 +128,7 @@ class Fighter extends Sprite{
             this.switchSprite('death')
         } else {
             this.switchSprite('takeHit')
-            this.audios.takeHit?.play()
+            this.audios.death.play()
         }
     }
 

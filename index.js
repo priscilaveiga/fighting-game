@@ -91,6 +91,10 @@ const player = new Fighter({
         attack:{
             audioSrc: 'audio/Battle_Attack_7.mp3',
             html5: true
+        },
+        death:{
+            audioSrc: 'audio/Pain_Grunt_1.mp3',
+            html5: true
         }
     }
 })
@@ -157,6 +161,10 @@ const enemy = new Fighter({
     audios:{
         attack:{
             audioSrc: 'audio/Battle_Attack_12.mp3',
+            html5: true
+        },
+        death:{
+            audioSrc: 'audio/Pain_Grunt_6.mp3',
             html5: true
         }
     }
