@@ -1,5 +1,3 @@
-//screen.orientation.lock('natural').catch(e=> console.log(e))
-
 //Setting the canvas to a 2d
 const canvas = document.querySelector('canvas')
 const context = canvas.getContext('2d')
@@ -356,3 +354,8 @@ window.addEventListener('keyup', (event) => {
     }
 })
 
+// changing game scale for full screen
+setInitialScale({
+    gameHeight: 576,
+    gameWidth: 1024
+});

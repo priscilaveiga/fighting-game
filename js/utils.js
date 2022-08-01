@@ -36,3 +36,13 @@ function decreaseTimer() {
         determineWinners({ player, enemy, timerId })
     }
 }
+
+function setInitialScale ({ gameHeight, gameWidth}){
+
+    const screenWidth = screen.width > screen.height ? screen.width : screen.height;
+    const screenHeight = screen.width > screen.height ? screen.height : screen.width;
+    const gameHeightRatio = screenHeight / gameHeight;
+    const gameWidthRatio = screenWidth / gameWidth;
+    const initialScale = gameWidthRatio <= gameHeightRatio ? gameWidthRatio : gameHeightRatio;
+    document.querySelector('meta[name="viewport"]').setAttribute('content', `width=${screenWidth}, height=${screenHeight}, initial-scale=${initialScale}`);
+}
