@@ -1,3 +1,5 @@
+//screen.orientation.lock('natural').catch(e=> console.log(e))
+
 //Setting the canvas to a 2d
 const canvas = document.querySelector('canvas')
 const context = canvas.getContext('2d')
