@@ -1,61 +1,79 @@
-<header>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Press Start 2P', cursive;
-        }
-    </style>
-
-</header>
-
-<body>
-    <!-- main div -> red container div -->
-    <div style="position: relative; display: inline-block;">
-        <!-- header div -> smaller red container div -->
-        <div style="position: absolute; display: flex; width: 100%; align-items: center; padding: 20px;">
-
-            <!-- player health -->
-            <div style="position: relative; width: 100%; display: flex; justify-content: flex-end; 
-                border-top: 2px solid black; border-bottom: 2px solid black; border-left: 2px solid black;">
-                <div style="background-color: #DC2626; height: 30px; width: 100%;"></div>
-                <div id="playerHealth"
-                    style="background-color: #818CF8; position: absolute; top: 0; right: 0; bottom: 0; width: 100%;"></div>
-            </div>
-
-            <!-- timer -->
-            <div id="timer"
-                style="background-color: #3F3F46; height: 50px; width: 100px; flex-shrink: 0; display: flex; align-items: 
-                center; justify-content: center; color: white; border: 2px solid black;">
-                10
-            </div>
-
-            <!-- enemy health -->
-            <div style="position: relative; width: 100%; 
-                border-top: 2px solid black; border-bottom: 2px solid black; border-right: 2px solid black;">
-                <div style="background-color: #DC2626; height: 30px;"></div>
-                <div id="enemyHealth"
-                    style="background-color: #818CF8; position: absolute; top: 0; right: 0; bottom: 0; left: 0;"></div>
-            </div>
-        </div>
-
-        <!-- Result of the game -->
-        <div
-            id="gameResult"
-            style="position: absolute; color: whitesmoke; display: none; align-items: center; justify-content: center; top: 0; bottom: 0; left: 0; right: 0;">
-            Tie
-        </div>
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
         
-        <canvas></canvas>
-    </div>
+        <style>
+            * {
+                box-sizing: border-box;
+                font-family: 'Press Start 2P', cursive;
+            }
+        </style>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js" integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js" integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="js/audio.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/classes.js"></script>
-    <script src="index.js"></script>
-</body>
+    </head>
+
+    <body>
+        <!-- main div -> red container div -->
+        <div style="position: relative; display: inline-block;">
+            <!-- header div -> smaller red container div -->
+            <div id ="indexScreen" style="position: absolute; display: none; width: 100%; align-items: center; padding: 20px;">
+
+                <!-- player health -->
+                <div style="position: relative; width: 100%; display: flex; justify-content: flex-end; 
+                    border-top: 2px solid black; border-bottom: 2px solid black; border-left: 2px solid black;">
+                    <div style="background-color: #DC2626; height: 30px; width: 100%;"></div>
+                    <div id="playerHealth"
+                        style="background-color: #818CF8; position: absolute; top: 0; right: 0; bottom: 0; width: 100%;"></div>
+                </div>
+
+                <!-- timer -->
+                <div id="timer"
+                    style="background-color: #3F3F46; height: 50px; width: 100px; flex-shrink: 0; display: flex; align-items: 
+                    center; justify-content: center; color: white; border: 2px solid black;">
+                    10
+                </div>
+
+                <!-- enemy health -->
+                <div style="position: relative; width: 100%; 
+                    border-top: 2px solid black; border-bottom: 2px solid black; border-right: 2px solid black;">
+                    <div style="background-color: #DC2626; height: 30px;"></div>
+                    <div id="enemyHealth"
+                        style="background-color: #818CF8; position: absolute; top: 0; right: 0; bottom: 0; left: 0;"></div>
+                </div>
+            </div>
+
+            <!--Start screen-->
+            <div id="startGame" style="position: absolute; display: flexbox; width: 100%; align-items: center; padding: 20px;">
+                <div style="position: relative; display: flex; width: 100%; height: 50px; align-items: center; justify-content: center;">
+                    <h2>Fighting Game</h2>
+                </div>
+                
+                <div>
+
+                </div>
+                
+                <div  style="position: relative; display: flex; align-items: center; justify-content: center; width: 100%; height: 50px;">
+                    <button id="pressStartButton" style="background-color: green; border-radius: 12px;">Start</button>
+                </div>
+            </div>
+
+            <!-- Result of the game -->
+            <div
+                id="gameResult"
+                style="position: absolute; color: whitesmoke; display: none; align-items: center; justify-content: center; top: 0; bottom: 0; left: 0; right: 0;">
+                Tie
+            </div>
+            
+            <canvas></canvas>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js" integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js" integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="js/audio.js"></script>
+        <script src="js/utils.js"></script>
+        <script src="js/classes.js"></script>
+        <script src="index.js"></script>
+    </body>
+</html>

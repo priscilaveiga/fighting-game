@@ -188,7 +188,24 @@ const keys = {
     }
 }
 
-decreaseTimer()
+//Start screen after click on button
+let gameHasStarted = false
+function startGame(){
+    context.fillStyle = 'purple'
+    context.fillRect(0, 0, canvas.width, canvas.height)
+    gameHasStarted = true
+    if (gameHasStarted){
+        document.getElementById('pressStartButton').addEventListener("click", () => {
+            document.querySelector('#indexScreen').style.display = 'flex'
+            document.querySelector('#startGame').style.display = 'none'
+            decreaseTimer()
+            animate()
+            return
+        })
+    }
+} 
+
+startGame()
 
 //Creating an animation for players -> this is a loop to repeat the sequence of movements
 function animate() {
@@ -288,8 +305,6 @@ function animate() {
     }
 }
 
-animate()
-
 window.addEventListener('keydown', (event) => {
     if(!player.dead){
         switch (event.key) {
@@ -353,4 +368,3 @@ window.addEventListener('keyup', (event) => {
             break
     }
 })
-
