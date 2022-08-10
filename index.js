@@ -191,8 +191,17 @@ const keys = {
 //Start screen after click on button
 let gameHasStarted = false
 function startGame(){
-    context.fillStyle = 'purple'
     context.fillRect(0, 0, canvas.width, canvas.height)
+    background.image.onload = ()=>{
+        context.drawImage(background.image, 0, 0)
+        context.fillStyle = 'rgba(255, 2555, 255, 0.30)'
+        context.fillRect(0, 0, canvas.width, canvas.height)
+    }
+    document.querySelector('#headerGame').innerHTML = 'Fighting Game'
+    document.querySelector('#pressStartButton').style.display = 'flex'
+    document.querySelector('#pressStartButton').innerHTML = 'Start'
+    
+
     gameHasStarted = true
     if (gameHasStarted){
         document.getElementById('pressStartButton').addEventListener("click", () => {
