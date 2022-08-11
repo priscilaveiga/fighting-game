@@ -6,10 +6,17 @@
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
         
         <style>
-            * {
+            .gameLetter {
                 box-sizing: border-box;
                 font-family: 'Press Start 2P', cursive;
+                font-size: large;
             }
+            .introGame {
+                box-sizing: border-box;
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                font-size: 19px;
+            }
+            
         </style>
 
     </head>
@@ -18,7 +25,7 @@
         <!-- main div -> red container div -->
         <div style="position: relative; display: inline-block;">
             <!-- header div -> smaller red container div -->
-            <div id ="indexScreen" style="position: absolute; display: none; width: 100%; align-items: center; padding: 20px;">
+            <div class = "gameLetter" id ="indexScreen" style="position: absolute; display: none; width: 100%; align-items: center; padding: 20px;">
 
                 <!-- player health -->
                 <div style="position: relative; width: 100%; display: flex; justify-content: flex-end; 
@@ -45,22 +52,49 @@
             </div>
 
             <!--Start screen-->
-            <div id="startGame" style="position: absolute; display: flexbox; width: 100%; align-items: center; padding: 20px;">
-                <div style="position: relative; display: flex; width: 100%; height: 50px; align-items: center; justify-content: center;">
-                    <h2 id = "headerGame"> </h2>
+            <div id="startGame" style="position: absolute; display: none; width: 100%; align-items: center;">
+                <div style="position: relative; display: flex;  height: 20%; align-items: center; justify-content: center; padding: 20px;">
+                    <h2 class = "gameLetter" id = "headerGame">Fighting Game</h2>
                 </div>
                 
-                <div>
+                <div class="introGame" style="position: relative; display: flex; width: 100%; align-items: center; justify-content: center; ">
+                    <p>This game was building by Priscila Veiga as a study project based on Chris Courses Tutorial.</p>
+                </div>
+                
+                <div style="position: relative; display: flex; width: 100%; align-items: center; justify-content: center;">
+                    <h2>How to play:</h2>
+                </div>
+
+                <div class="introGame" style="position: relative; display: flex; width: 100%; height: 40%; align-items: center; justify-content: center; padding: 20px">
+                    <div style="width: 35%;"></div>
+                    <div style="position: relative; align-content: center; width: 20%; height: 70%;">
+                        <h2>Player 1:</h2>
+                        <p>a - left</p>
+                        <p>d - right</p>
+                        <p>w - jump</p>
+                        <p>space bar - attack</p>
+                    </div>
+                    <div style="position: relative; width: 20%; height: 70%;">
+                        <h2>Player 2:</h2>
+                        <p>&#8592; - left</p>
+                        <p>&#8594; - right</p>
+                        <p>&#8593; - jump</p>
+                        <p>&#8595; - attack</p>
+                    </div>
+                    <div style="width: 35%;"></div>
+
 
                 </div>
                 
-                <div style="position: relative; display: flex; align-items: center; justify-content: center; width: 100%; height: 50px;">
-                    <button id="pressStartButton" style="background-color: green; display: none; border-radius: 12px;"> </button>
+                <div style="position: relative; display: flex; align-items: center; justify-content: center; width: 100%; height: 15%; ">
+                    <button class = "gameLetter" id="pressStartButton" style="background-color: green; display: flex; padding: 20px; border-radius: 12px; justify-content: center;">Press Start</button>
                 </div>
+                
             </div>
 
             <!-- Result of the game -->
             <div
+                class = "gameLetter"
                 id="gameResult"
                 style="position: absolute; color: whitesmoke; display: none; align-items: center; justify-content: center; top: 0; bottom: 0; left: 0; right: 0;">
                 Tie
@@ -71,7 +105,6 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js" integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js" integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="js/audio.js"></script>
         <script src="js/utils.js"></script>
         <script src="js/classes.js"></script>
         <script src="index.js"></script>
