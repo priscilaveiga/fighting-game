@@ -87,7 +87,8 @@ class Fighter extends Sprite{
         for ( const audio in this.audios){
             audios[audio] = new Howl({
                 src: audios[audio].audioSrc, 
-                html5: audios[audio].html5
+                html5: audios[audio].html5,
+                mute: audios[audio].mute
             })
         }
     }

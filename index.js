@@ -90,11 +90,13 @@ const player = new Fighter({
     audios:{
         attack:{
             audioSrc: 'audio/Battle_Attack_7.mp3',
-            html5: true
+            html5: true,
+            mute: true
         },
         death:{
             audioSrc: 'audio/Pain_Grunt_1.mp3',
-            html5: true
+            html5: true,
+            mute: true
         }
     }
 })
@@ -161,11 +163,13 @@ const enemy = new Fighter({
     audios:{
         attack:{
             audioSrc: 'audio/Battle_Attack_12.mp3',
-            html5: true
+            html5: true,
+            mute: true
         },
         death:{
             audioSrc: 'audio/Pain_Grunt_6.mp3',
-            html5: true
+            html5: true,
+            mute: true
         }
     }
 })
@@ -207,6 +211,8 @@ function startGame(){
             document.querySelector('#startGame').style.display = 'none'
             decreaseTimer()
             animate()
+            player.audios.attack.mute(false)
+            enemy.audios.attack.mute(false)
             return
         })
     }
