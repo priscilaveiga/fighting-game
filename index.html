@@ -1,32 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com" rel="preconnect" >
+        <link href="https://fonts.gstatic.com" crossorigin rel="preconnect">
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-        
-        <style>
-            * {
-                box-sizing: border-box;
-                font-family: 'Press Start 2P', cursive;
-                font-size: large;
-            }
-    
-            kbd {
-                background-color: #eee;
-                border-radius: 3px;
-                border: 1px solid #b4b4b4;
-                box-shadow: 0 1px 1px rgba(0, 0, 0, .2), 0 2px 0 0 rgba(255, 255, 255, .7) inset;
-                color: #333;
-                display: inline-block;
-                font-size: .85em;
-                font-weight: 700;
-                line-height: 1;
-                padding: 4px 6px;
-                white-space: nowrap;
-            }
-        </style>
-
+        <link href= "index.css" rel= "stylesheet">
     </head>
 
     <body>
@@ -61,8 +39,8 @@
 
             <!--Start screen-->
             <div id="startGame" style="position: absolute; display: none; width: 100%; align-items: center; color: #351C4D;">
-                <div style="position: relative; display: flex;  height: 20%; align-items: center; justify-content: center; padding: 20px;">
-                    <h2 id = "headerGame">Fighting Game</h2>
+                <div style="position: relative; display: flex;  height: 20%; align-items: center; justify-content: center; margin-top: 20px;">
+                    <h1 id = "headerGame">Fighting Game</h1>
                 </div>
                 
                 <div style="position: relative; display: flex; width: 100%; text-align: center; align-items: center; justify-content: center; padding: 10px;">
@@ -70,17 +48,17 @@
                 </div>
                 
                 <div style="position: relative; display: flex; width: 100%; align-items: center; justify-content: center;">
-                    <h2>How to play:</h2>
+                    <h2 style="margin-bottom: 0px">How to play:</h2>
                 </div>
 
                 <div style="position: relative; display: flex; width: 100%; height: 40%; align-items: center; justify-content: center; padding: 20px">
                     <div style="width: 35%;"></div>
-                    <div style="position: relative; align-content: center; width: 30%; height: 70%;">
+                    <div style="position: relative; align-content: center; width: 40%; height: 70%;">
                         <h2>Player 1:</h2>
                         <p><kbd>a</kbd> - left</p>
                         <p><kbd>d</kbd> - right</p>
                         <p><kbd>w</kbd> - jump</p>
-                        <p><kbd>_</kbd> - attack</p>
+                        <p><kbd>Space</kbd> - attack</p>
                     </div>
                     <div style="position: relative; width: 30%; height: 70%;">
                         <h2>Player 2:</h2>
@@ -92,8 +70,8 @@
                     <div style="width: 35%;"></div>
                 </div>
                 
-                <div style="position: relative; display: flex; align-items: center; justify-content: center; width: 100%; height: 15%; ">
-                    <button id="pressStartButton" style="background-color: green; color: whitesmoke; display: flex; padding: 20px; border-radius: 12px; justify-content: center;">Press Start</button>
+                <div style="position: relative; display: flex; align-items: center; justify-content: center; width: 100%; height: 15%;">
+                    <button  class = "btn-hover color" id="pressStartButton">Press Start</button>
                 </div>
                 
             </div>
