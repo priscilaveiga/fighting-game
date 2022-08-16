@@ -235,7 +235,7 @@ function animate() {
     player.velocity.x = 0
    
     // to accurate our movement x
-    if ((keys.d.pressed && player.lastKey === 'd') && player.attackBox.position.x + player.attackBox.width < canvas.width) {
+    if ((keys.d.pressed && player.lastKey === 'd') && player.position.x + player.attackBox.width < canvas.width) {
         player.velocity.x = 5
         player.switchSprite('run')
         console.log(player)
@@ -254,10 +254,11 @@ function animate() {
     
     // enemy movement
     enemy.velocity.x = 0
-    if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
+    if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight' && enemy.position.x + enemy.width < canvas.width) {
         enemy.velocity.x = 5
         enemy.switchSprite('run')
-    } else if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
+        console.log(enemy)
+    } else if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft' && enemy.position.x > 0) {
         enemy.velocity.x = -5
         enemy.switchSprite('run')
     } else { enemy.switchSprite('idle')
