@@ -90,11 +90,13 @@ const player = new Fighter({
     audios:{
         attack:{
             audioSrc: 'audio/Battle_Attack_7.mp3',
-            html5: true
+            html5: true,
+            mute: true
         },
         death:{
             audioSrc: 'audio/Pain_Grunt_1.mp3',
-            html5: true
+            html5: true,
+            mute: true
         }
     }
 })
@@ -161,16 +163,16 @@ const enemy = new Fighter({
     audios:{
         attack:{
             audioSrc: 'audio/Battle_Attack_12.mp3',
-            html5: true
+            html5: true,
+            mute: true
         },
         death:{
             audioSrc: 'audio/Pain_Grunt_6.mp3',
-            html5: true
+            html5: true,
+            mute: true
         }
     }
 })
-
-console.log(player)
 
 //to keep good accuracy in our game  we are creating an obj keys which contain the keys obj - when the keys are pressed
 const keys = {
@@ -188,7 +190,34 @@ const keys = {
     }
 }
 
-decreaseTimer()
+//Start screen and starting the game after click on button
+let gameHasStarted = false
+function startGame(){
+    context.fillStyle = 'white'
+    context.fillRect(0, 0, canvas.width, canvas.height)
+    background.image.onload = ()=>{
+        context.drawImage(background.image, 0, 0)
+        context.fillStyle = 'rgba(255, 2555, 255, 0.30)'
+        context.fillRect(0, 0, canvas.width, canvas.height)
+        document.querySelector('#startGame').style.display = 'block'
+
+    }
+    gameHasStarted = true
+    if (gameHasStarted){
+        document.getElementById('pressStartButton').addEventListener("click", () => {
+            document.querySelector('#indexScreen').style.display = 'flex'
+            document.querySelector('#startGame').style.display = 'none'
+            decreaseTimer()
+            animate()
+            player.audios.attack.mute(false)
+            enemy.audios.attack.mute(false)
+            setEventListener()
+            return
+        })
+    }
+} 
+
+startGame()
 
 //Creating an animation for players -> this is a loop to repeat the sequence of movements
 function animate() {
@@ -206,10 +235,11 @@ function animate() {
     player.velocity.x = 0
    
     // to accurate our movement x
-    if (keys.d.pressed && player.lastKey === 'd') {
+    if ((keys.d.pressed && player.lastKey === 'd') && player.position.x + player.attackBox.width < canvas.width) {
         player.velocity.x = 5
         player.switchSprite('run')
-    } else if (keys.a.pressed && player.lastKey === 'a') {
+        console.log(player)
+    } else if (keys.a.pressed && player.lastKey === 'a' && player.position.x > 0) {
         player.velocity.x = -5
         player.switchSprite('run')
     } else { player.switchSprite('idle')
@@ -224,10 +254,11 @@ function animate() {
     
     // enemy movement
     enemy.velocity.x = 0
-    if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
+    if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight' && enemy.position.x + enemy.width < canvas.width) {
         enemy.velocity.x = 5
         enemy.switchSprite('run')
-    } else if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
+        console.log(enemy)
+    } else if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft' && enemy.position.x > 0) {
         enemy.velocity.x = -5
         enemy.switchSprite('run')
     } else { enemy.switchSprite('idle')
@@ -288,69 +319,68 @@ function animate() {
     }
 }
 
-animate()
+function setEventListener(){
+    window.addEventListener('keydown', (event) => {
+        if(!player.dead){
+            switch (event.key) {
+                case 'd':
+                    keys.d.pressed = true
+                    player.lastKey = 'd'
+                    break
+                case 'a':
+                    keys.a.pressed = true
+                    player.lastKey = 'a'
+                    break
+                case 'w':
+                    player.velocity.y = -10
+                    break
 
-window.addEventListener('keydown', (event) => {
-    if(!player.dead){
+                //attacking key
+                case ' ':
+                    player.attack()
+                    break
+            }        
+        }
+        if(!enemy.dead){
+            switch (event.key){
+                case 'ArrowRight':
+                    keys.ArrowRight.pressed = true
+                    enemy.lastKey = 'ArrowRight'
+                    break
+                case 'ArrowLeft':
+                    keys.ArrowLeft.pressed = true
+                    enemy.lastKey = 'ArrowLeft'
+                    break
+                case 'ArrowUp':
+                    enemy.velocity.y = -10
+                    break
+
+                //enemy attacking key
+                case 'ArrowDown':
+                    enemy.attack()
+                    break
+            }
+        }
+    })
+
+    window.addEventListener('keyup', (event) => {
         switch (event.key) {
             case 'd':
-                keys.d.pressed = true
-                player.lastKey = 'd'
+                keys.d.pressed = false
                 break
             case 'a':
-                keys.a.pressed = true
-                player.lastKey = 'a'
-                break
-            case 'w':
-                player.velocity.y = -10
-                break
-
-            //attacking key
-            case ' ':
-                player.attack()
-                break
-        }        
-    }
-    if(!enemy.dead){
-        switch (event.key){
-            case 'ArrowRight':
-                keys.ArrowRight.pressed = true
-                enemy.lastKey = 'ArrowRight'
-                break
-            case 'ArrowLeft':
-                keys.ArrowLeft.pressed = true
-                enemy.lastKey = 'ArrowLeft'
-                break
-            case 'ArrowUp':
-                enemy.velocity.y = -10
-                break
-
-            //enemy attacking key
-            case 'ArrowDown':
-                enemy.attack()
+                keys.a.pressed = false
                 break
         }
-    }
-})
 
-window.addEventListener('keyup', (event) => {
-    switch (event.key) {
-        case 'd':
-            keys.d.pressed = false
-            break
-        case 'a':
-            keys.a.pressed = false
-            break
-    }
-
-    //enemy keys
-    switch (event.key) {
-        case 'ArrowRight':
-            keys.ArrowRight.pressed = false
-            break
-        case 'ArrowLeft':
-            keys.ArrowLeft.pressed = false
-            break
-    }
-})
-
+        //enemy keys
+        switch (event.key) {
+            case 'ArrowRight':
+                keys.ArrowRight.pressed = false
+                break
+            case 'ArrowLeft':
+                keys.ArrowLeft.pressed = false
+                break
+        }
+    })
+}
